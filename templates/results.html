@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="glass-card">
+  <h3 class="mb-4 text-center">Transport Options</h3>
+
+  <div class="text-center mb-3">
+    Travel Date: {{ session.get('last_search', {}).get('travel_date') }}
+  </div>
+
+  {% for opt in options %}
+    <div class="option-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ opt.name }}</strong><br>
+          {{ opt.from }} → {{ opt.to }}<br>
+          {{ opt.departure_time }} → {{ opt.arrival_time }}
+        </div>
+
+        <div class="text-end">
+          <h5>₹{{ opt.price }}</h5>
+          <div class="d-flex gap-2">
+            <form method="post" action="{{ url_for('select_transport') }}">
+              <input type="hidden" name="index" value="{{ loop.index0 }}">
+              <button class="btn btn-sm btn-primary">Select</button>
+            </form>
+            <a href="{{ opt.link or '#' }}" target="_blank" class="btn btn-sm btn-outline-success">
+              Book
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <div class="text-center mt-3">
+    <a href="{{ url_for('route', mode=mode) }}" class="btn btn-primary">Back</a>
+  </div>
+
+</div>
+
+{% endblock %}

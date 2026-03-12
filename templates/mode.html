@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="glass-card text-center mx-auto" style="max-width:500px;">
+  <h2 class="mb-4">Choose Your Travel Mode</h2>
+
+  {% for key,label in modes %}
+    <a href="{{ url_for('route') }}?mode={{ key }}" 
+       class="btn btn-primary w-100 mb-3">
+       {{ label }}
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

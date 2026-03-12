@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="glass-card">
+  <h2 class="mb-4 text-center">🧳 My Trips</h2>
+
+  {% if trips %}
+    {% for trip in trips %}
+      <div class="option-card">
+        <div class="d-flex justify-content-between align-items-center">
+
+          <div>
+            <strong>{{ trip[2] }} → {{ trip[3] }}</strong><br>
+            Date: {{ trip[4] }} <br>
+            Mode: {{ trip[1] }} <br>
+            Transport: {{ trip[5] }} <br>
+            Hotel: {{ trip[6] or "Not Selected" }} <br>
+            Total: ₹{{ trip[7] }}
+          </div>
+
+          <div class="text-end">
+            <a href="{{ url_for('delete_trip', trip_id=trip[0]) }}"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Are you sure?')">
+               Delete
+            </a>
+          </div>
+
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      No trips found.
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="glass-card">
+  <h3 class="mb-4 text-center">Hotels in {{ dest }}</h3>
+
+  {% if remaining is not none %}
+    <div class="alert alert-info text-center">
+      Remaining Budget: ₹{{ remaining }}
+    </div>
+  {% endif %}
+
+  {% if message %}
+    <div class="alert alert-warning text-center">
+      {{ message }}
+    </div>
+  {% endif %}
+
+  {% if hotels %}
+    {% for hotel in hotels %}
+      <div class="option-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ hotel.name }}</strong><br>
+            {{ hotel.location }}
+          </div>
+
+          <div class="text-end">
+            <h5>₹{{ hotel.price }}</h5>
+            <div class="d-flex gap-2">
+              <form method="post" action="{{ url_for('select_hotel') }}">
+                <input type="hidden" name="index" value="{{ loop.index0 }}">
+                <button class="btn btn-sm btn-primary">Select</button>
+              </form>
+              <a href="{{ hotel.link or '#' }}" target="_blank" class="btn btn-sm btn-outline-success">
+                Book
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="d-flex justify-content-between mt-3">
+    <a href="{{ url_for('back_to_results') }}" class="btn btn-primary">Back</a>
+    <a href="{{ url_for('skip_hotel') }}" class="btn btn-primary">Skip Hotel</a>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="glass-card mx-auto" style="max-width:600px;">
+  <h3 class="mb-4 text-center">Plan Your Journey</h3>
+
+  <form method="post" action="{{ url_for('search') }}">
+    <input type="hidden" name="mode" value="{{ mode }}">
+
+    <div class="mb-3">
+      <label>From</label>
+      <input class="form-control" name="from_city" list="places" required>
+    </div>
+
+    <div class="mb-3">
+      <label>To</label>
+      <input class="form-control" name="to_city" list="places" required>
+    </div>
+
+    <datalist id="places">
+      {% for p in places %}
+        <option value="{{ p }}">
+      {% endfor %}
+    </datalist>
+
+    <div class="mb-3">
+      <label>Travel Date</label>
+      <input type="date" class="form-control" name="travel_date" value="{{ today }}" min="{{ today }}" max="{{ max_allowed}}" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Budget (Optional)</label>
+      <input class="form-control" name="budget">
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <a href="{{ url_for('mode') }}" class="btn btn-primary">Back</a>
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
